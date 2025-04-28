@@ -4,7 +4,13 @@ data = normalize(data, "range");
 [n, m] = size(data);
 
 [rho, aknn, aknn_dis] = getRho(data, numAnchor);
-aknn = aknn(:, 1:k);  aknn_dis = aknn_dis(:, 1:k);
+
+if n <= 20000 && m <= 2
+    [aknn, aknn_dis] = knnsearch(data, data, "K", k+1);
+    aknn(:, 1) = [];  aknn_dis(:, 1) = [];
+else
+    aknn = aknn(:, 1:k);  aknn_dis = aknn_dis(:, 1:k);
+end
 
 nneigh = zeros(n, 1);
 delta = zeros(n, 1);
