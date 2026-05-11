@@ -3,6 +3,9 @@ function cl = FDPAN(data, nclust, numAnchor, k)
 data = normalize(data, "range");
 [n, m] = size(data);
 
+min_numAnchor = floor(log2(3*n/100));
+warning("The minimum of numAnchor is: %g", min_numAnchor);
+
 [rho, aknn, aknn_dis] = getRho(data, numAnchor);
 
 if n <= 20000 && m <= 2
